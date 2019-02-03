@@ -39,3 +39,4 @@ usage.
 * Rewrite "on the fly" function definitions in Jupyter notebooks to modules
 * Write additional test methods for increased function coverage
 * Define class to wrap inter-related function definitions as methods
+* Rewrite initial knn_base functions to use numpy array objects
