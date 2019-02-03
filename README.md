@@ -52,7 +52,6 @@ Cost function, J(&Theta;):
   - J(&theta;) = &Sigma;<sub>i=0</sub><sup>m</sup> ( h<sub>&theta;</sub>(x<sup>i</sup>) - y<sup>i</sup> )<sup>2</sup>
 
 
-
 #### TODOs:
 
 * Cleanup root directory to reduce file clutter
