@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -72,7 +71,6 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-<<<<<<< HEAD
 
 # pyenv
 .python-version
@@ -104,10 +102,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-=======
-*.ods
->>>>>>> update .gitignore to ignore open spreadsheet files
-=======
-*.pyc
-
->>>>>>> add .gitignore file to prevent tracking compiled Python files
