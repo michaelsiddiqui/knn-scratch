@@ -118,3 +118,38 @@ def predict_category_from_knn(query,
     predictions = [[key, value] for key, value in votes.iteritems()]
     predictions.sort(key=itemgetter(1))
     return predictions
+
+
+def predict_knn_classes_from_set(test_set,
+                                 training_set,
+                                 k,
+                                 vector_length,
+                                 category_index=-1):
+    """loop over the test set and generate predictions for each feature row
+
+    Args:
+        test_set (list): collection of vectors for which predictions are made
+        dataset (list): collection of vectors from which neighbors will
+            be found
+        k (int): number of neighbors to be returned
+        vector_length (int): equals the length of the vector to be used in
+            distance measurement; assumes numbers are stored in the first
+            `vector_length` units of the vector, predicted or descriptive
+            content are assumed to be in the remaining portion of the vector
+            if applicable
+        category_index (int): optional argument to select a specific element
+            by index as the predicted category in the dataset rows;
+            default is index in position one beyond length of query vector
+    """
+    if category_index < 0:
+        category_index = vector_length
+    test_set_predictions = []
+    for row in test_set:
+        predictions = predict_category_from_knn(row,
+                                                training_set,
+                                                k,
+                                                vector_length,
+                                                category_index=category_index)
+        prediction = predictions[0][0]
+        test_set_predictions.append(prediction)
+    return test_set_predictions
