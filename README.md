@@ -33,6 +33,26 @@ of the coded workflows executed in the interactive sessions
 Python modules have docstrings intended to give reader/developer context on
 usage.
 
+#### How to optimize distance weightings in a regression algorithm
+
+*x<sup>(i)</sup><sub>j</sub>* = value of feature *j* in the *i*<sup>th</sup> training example, in knn regression the features are the distance scores
+
+*x<sup>(i)</sup>* = the input (features) of the *i*<sup>th</sup> training example
+
+*m* = the number of training examples
+
+*n* = the number of features
+
+The prediction function, h<sub>&theta;</sub>(X):
+
+- h<sub>&theta;</sub>(X) = &theta;<sup>T</sup>x = &Sigma; <sub>j=0</sub><sup>n</sup> ( &theta;<sub>j</sup>\*x<sub>j</sub> )
+
+Cost function, J(&Theta;):
+
+  - J(&theta;) = &Sigma;<sub>i=0</sub><sup>m</sup> ( h<sub>&theta;</sub>(x<sup>i</sup>) - y<sup>i</sup> )<sup>2</sup>
+
+
+
 #### TODOs:
 
 * Cleanup root directory to reduce file clutter
