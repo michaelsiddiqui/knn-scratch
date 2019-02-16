@@ -100,3 +100,51 @@ def norm_dataset(dataset, v_len):
     features_less_min = dataset[:, :v_len] - dataset[:, :v_len].min(axis=0)
     normed_features = features_less_min / n_range
     return np.concatenate((normed_features, dataset[:, v_len:]), axis=1)
+
+
+def standardize_dataset(dataset, v_len):
+    """standardize features in dataset
+
+    Args:
+        dataset (numpy.array): numpy array containing the dataset to be
+            normalized
+        v_len (int): the length of the feature vector each row; assumes that
+            the features are ordered first in the rows and that the labels or
+            true values are in the later values in the rows
+    """
+    features_less_mean = dataset[:, :v_len] - dataset[:, :v_len].mean(axis=0)
+    standard_deviations = dataset[:, :v_len].std(axis=0)
+    standardized_features = features_less_mean / standard_deviations
+    return np.concatenate((standardized_features, dataset[:, v_len:]), axis=1)
+
+
+def split_dataset(dataset, split_count, split_array=None):
+    """split a dataset into two groups
+
+    Args:
+        dataset (numpy.array): numpy array containing the dataset to be split
+        split_count (int): the number of rows from the dataset in one group
+        array (numpy.array): an array of ones and zeros to be used to split
+            the dataset; a convenience for testing
+
+    Returns:
+        dataset1, dataset2: two numpy.array objects containing each of the
+            split datasets
+    """
+    dataset_length = dataset.shape[0]
+    if split_count > dataset_length:
+        raise ValueError("split_count value can't be more row number")
+    try:
+        split_array.any()
+    except AttributeError:
+        split_array = np.concatenate(
+            np.ones(split_count),
+            np.zeros(dataset_length - split_count),
+            0
+        )
+        np.random.shuffle(split_array)
+    split_indices = np.where(split_array)
+    dataset1 = dataset[split_indices]
+    other_indices = np.where(split_array == 0)
+    dataset2 = dataset[other_indices]
+    return dataset1, dataset2
