@@ -13,6 +13,8 @@ from dataset_prep import cast_numbers_to_float
 from dataset_prep import inspect_types_in_dataset
 from dataset_prep import pivot_categorical_feature_columns
 from dataset_prep import norm_dataset
+from dataset_prep import standardize_dataset
+from dataset_prep import split_dataset
 
 FILENAME_FIXTURE1 = 'data/iris_data.csv'
 FILENAME_FIXTURE2 = 'data/usedcars.csv'
@@ -98,7 +100,7 @@ class TestPivotCategoricalFeatureColumens(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-class Test(unittest.TestCase):
+class TestNormDataset(unittest.TestCase):
     """unit tests for norm_dataset function
     """
     def test_expected_output_with_simple_array(self):
@@ -125,3 +127,74 @@ class Test(unittest.TestCase):
             actual.append(new_row)
         test_bool = expected == actual
         self.assertTrue(test_bool)
+
+
+class TestStandardizeDataset(unittest.TestCase):
+    """unit tests for standardize_dataset function
+    """
+    def test_expected_output_with_simple_array(self):
+        """Simple array of values to be normalized returns expected output
+        """
+        input_dataset = np.array([
+            [5.1, 3.5, 1.4, 8.3],
+            [4.9, 3.0, 1.4, 6.2],
+            [4.7, 3.2, 1.3, 5.4],
+            [4.6, 3.1, 1.5, 3.7],
+            [5.0, 3.6, 1.4, 9.7]
+        ])
+        expected = [
+            [1.294, 0.9503, 0, 0.7732],
+            [0.2157, -1.2094,  0., -0.2169],
+            [-0.8627, -0.3455, -1.5811, -0.5941],
+            [-1.4018, -0.7775, 1.5811, -1.3956],
+            [0.7548, 1.3822, 0, 1.4333]
+        ]
+        output = standardize_dataset(input_dataset, 4)
+        actual = []
+        for row in output:
+            new_row = []
+            for item in row:
+                new_row.append(round(item, 4))
+            actual.append(new_row)
+        test_bool = expected == actual
+        self.assertTrue(test_bool)
+
+
+class TestSplitDataset(unittest.TestCase):
+    """unit tests for split_dataset function
+    """
+    def test_expected_output_with_split_array_supplied(self):
+        """supply simple dataset array and an explicit split array
+
+        get expected output
+        """
+        input_dataset_array = np.array([
+            ['a', 'b', 'c'],
+            ['d', 'e', 'f'],
+            ['g', 'h', 'i'],
+            ['j', 'k', 'l'],
+            ['m', 'n', 'o'],
+            ['p', 'q', 'r'],
+            ['s', 't', 'u']
+        ])
+        input_split_array = np.array([1, 0, 0, 1, 1, 0, 1])
+        expected_dataset1 = np.array([
+            ['a', 'b', 'c'],
+            ['j', 'k', 'l'],
+            ['m', 'n', 'o'],
+            ['s', 't', 'u']
+        ])
+        expected_dataset2 = np.array([
+            ['d', 'e', 'f'],
+            ['g', 'h', 'i'],
+            ['p', 'q', 'r'],
+        ])
+        output_arrays = (split_dataset(
+            input_dataset_array,
+            1,
+            split_array=input_split_array)
+        )
+        test_bool1 = np.array_equal(expected_dataset1, output_arrays[0])
+        test_bool2 = expected_dataset2, output_arrays[1]
+        self.assertTrue(test_bool1)
+        self.assertTrue(test_bool2)
