@@ -71,6 +71,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+<<<<<<< HEAD
 
 # pyenv
 .python-version
@@ -102,3 +103,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+=======
+*.ods
+>>>>>>> update .gitignore to ignore open spreadsheet files
