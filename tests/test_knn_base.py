@@ -74,6 +74,23 @@ class TestFindKNeighbors(unittest.TestCase):
         actual = find_k_neighbors(query, dataset, 3, 3)
         self.assertEqual(expected, actual)
 
+    def test_find_expected_two_neighbors_with_distances(self):
+        """query the fixture dataset and get expected distances
+        """
+        dataset = FIXTURE_DATASET1
+        query = [2, 9, 5]
+        expected_neighbors = [[5, 5, 5, 'in'], [7, 7, 7, 'in']]
+        expected_distances = [5.0, 5.744562646538029]
+        actual_result = find_k_neighbors(
+            query,
+            dataset,
+            2,
+            3,
+            return_distances=True
+        )
+        self.assertEqual(expected_neighbors, actual_result[0])
+        self.assertEqual(expected_distances, actual_result[1])
+
 
 class TestCalcCategoryFrequency(unittest.TestCase):
     """TestCase class containing unit tests for calc_category_frequency func
