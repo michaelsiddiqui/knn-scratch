@@ -8,6 +8,17 @@ import unittest
 
 from knn_base import euclidean_distance
 from knn_base import find_k_neighbors
+from knn_base import calc_category_frequency
+
+FIXTURE_DATASET1 = [
+    [-1, 0, 0, 'out'],
+    [3, 3, 3, 'in'],
+    [0, -1, 0, 'out'],
+    [5, 5, 5, 'in'],
+    [0, 0, -1, 'out'],
+    [-1, -1, -1, 'out'],
+    [7, 7, 7, 'in']
+]
 
 
 class TestEuclideanDistance(unittest.TestCase):
@@ -40,7 +51,7 @@ class TestEuclideanDistance(unittest.TestCase):
 
 
 class TestFindKNeighbors(unittest.TestCase):
-    """TestCase class containing unit tests for the find_k_neighbors
+    """TestCase class containing unit tests for the find_k_neighbors function
 
     Two tests:
     1. supply two row dataset and query, returns correct row
@@ -57,16 +68,22 @@ class TestFindKNeighbors(unittest.TestCase):
     def test_find_expected_three_neighbors(self):
         """supply a larger dataset, query with k equal to three
         """
-        dataset = [
-            [-1, 0, 0, 'out'],
-            [3, 3, 3, 'in'],
-            [0, -1, 0, 'out'],
-            [5, 5, 5, 'in'],
-            [0, 0, -1, 'out'],
-            [-1, -1, -1, 'out'],
-            [7, 7, 7, 'in']
-        ]
+        dataset = FIXTURE_DATASET1
         query = [6, 6, 6]
         expected = [dataset[3], dataset[6], dataset[1]]
         actual = find_k_neighbors(query, dataset, 3, 3)
         self.assertEqual(expected, actual)
+
+
+class TestCalcCategoryFrequency(unittest.TestCase):
+    """TestCase class containing unit tests for calc_category_frequency func
+    """
+    def test_find_expected_frequent_category_from_dataset1(self):
+        """supply fixture dataset1 get expected category count
+        """
+        dataset = FIXTURE_DATASET1
+        query = [6, 6, 6]
+        neighbors = find_k_neighbors(query, dataset, 3, 3)
+        actual = calc_category_frequency(neighbors, 3)
+        expected = {'in': 3}
+        self.assertEqual(actual, expected)
