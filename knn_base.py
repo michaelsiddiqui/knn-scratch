@@ -30,7 +30,11 @@ def euclidean_distance(vector1, vector2, length):
     return sqrt(distance)
 
 
-def find_k_neighbors(query, dataset, k, vector_length):
+def find_k_neighbors(query,
+                     dataset,
+                     k,
+                     vector_length,
+                     return_distances=False):
     """
     Return k vectors from dataset nearest to the query vector
 
@@ -54,7 +58,10 @@ def find_k_neighbors(query, dataset, k, vector_length):
         distances.append((row, eu_dist))
     distances.sort(key=itemgetter(1))
     neighbors = [row[0] for row in distances[:k]]
-    return neighbors
+    if return_distances:
+        return neighbors, [row[1] for row in distances[:k]]
+    else:
+        return neighbors
 
 
 def calc_category_frequency(dataset, vector_length, category_index=-1):
