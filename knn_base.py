@@ -30,7 +30,11 @@ def euclidean_distance(vector1, vector2, length):
     return sqrt(distance)
 
 
-def find_k_neighbors(query, dataset, k, vector_length):
+def find_k_neighbors(query,
+                     dataset,
+                     k,
+                     vector_length,
+                     return_distances=False):
     """
     Return k vectors from dataset nearest to the query vector
 
@@ -44,6 +48,8 @@ def find_k_neighbors(query, dataset, k, vector_length):
             `vector_length` units of the vector, predicted or descriptive
             content are assumed to be in the remaining portion of the vector
             if applicable
+        return_distances (bool): optional argument to enable find_k_neighbors
+            to return distance values
 
     Returns:
         list of k vectors found to be nearest neighbors
